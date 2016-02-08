@@ -289,7 +289,6 @@ make_mld6v2_msg(int type, int code, struct sockaddr_in6 *src,
 		pktinfo->ipi6_ifindex = ifindex;
 	if (src)
 		pktinfo->ipi6_addr = src->sin6_addr;
-	cmsgp = CMSG_NXTHDR(&sndmh, cmsgp);
     }
     if (alert) {
 #ifdef HAVE_RFC3542
@@ -328,9 +327,8 @@ make_mld6v2_msg(int type, int code, struct sockaddr_in6 *src,
 	    log_msg(LOG_ERR, 0,	/* assert */
 		"make_mld6_msg: inet6_option_append failed");
 #endif
-	cmsgp = CMSG_NXTHDR(&sndmh, cmsgp);
     }
-
+    cmsgp = CMSG_NXTHDR(&sndmh, cmsgp);	
     return TRUE;
 }
 
